@@ -1,0 +1,40 @@
+version: '3'
+services:
+  nginx:
+    build:
+      dockerfile: nginx.Dockerfile
+      context: ./
+    container_name: my-nginx-container
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-config:/etc/nginx/conf.d
+    networks:
+      - mynetwork
+  node-app:
+    build:
+      dockerfile: Dockerfile
+      context: ./  # Path to your Node.js application code
+    container_name: my-node-container
+    ports:
+      - "3000:3000"  # Map port 3000 on your host to port 3000 in the container
+    networks: 
+      - mynetwork
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: notes_app
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3310:3306"
+    networks:
+      - mynetwork
+
+volumes:
+  mysql-data:
+networks:
+  mynetwork:
+    

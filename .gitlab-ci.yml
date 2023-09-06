@@ -1,0 +1,17 @@
+# .gitlab-ci.yml
+
+# Define the stages that will be used in the pipeline
+stages:
+  - build
+
+# Define the job for the build stage
+build:
+  stage: build
+  tags:
+    - mithun # Use the custom runner with the 'hello' tag
+  script:
+  
+    - echo "Building the application"
+    # Add your build commands here
+  only:
+    - main # Deploy only when changes are pushed to the master branch

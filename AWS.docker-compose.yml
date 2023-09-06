@@ -1,0 +1,13 @@
+version: '3'
+services:
+  # Nginx service
+  my-nginx-container:
+    image: 784361705745.dkr.ecr.eu-north-1.amazonaws.com/customnginx:latest
+    container_name: my-nginx-container
+    ports:
+      - "80:80"
+  my-node-container:
+    image: 784361705745.dkr.ecr.eu-north-1.amazonaws.com/nodeapp:latest
+    container_name: my-node-container
+    ports:
+      - "3000:3000"  # Map port 3000 on your host to port 3000 in the container
