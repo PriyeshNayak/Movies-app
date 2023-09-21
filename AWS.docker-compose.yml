@@ -2,12 +2,19 @@ version: '3'
 services:
   # Nginx service
   my-nginx-container:
-    image: 784361705745.dkr.ecr.eu-north-1.amazonaws.com/customnginx:latest
+    image: 230374442770.dkr.ecr.eu-north-1.amazonaws.com/nginxrepo:latest
     container_name: my-nginx-container
     ports:
       - "80:80"
   my-node-container:
-    image: 784361705745.dkr.ecr.eu-north-1.amazonaws.com/nodeapp:latest
+    image: 230374442770.dkr.ecr.eu-north-1.amazonaws.com/myrepo:latest
     container_name: my-node-container
     ports:
-      - "3000:3000"  # Map port 3000 on your host to port 3000 in the container
+      - "3000:3000"  # Map port 3000 on your host to port 3000 in the container  
+  mysql-container:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
