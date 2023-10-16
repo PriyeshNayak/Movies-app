@@ -16,5 +16,5 @@ jobs:
           key: ${{ secrets.NGINX_MASTER_PVTKEY}}
           script: |
                  ./demo.sh
-                ssh ${{secrets.LALAMAID_USER}}@${{secrets.LALAMAID_IP}}
+                 ssh ${{secrets.LALAMAID_USER}}@${{secrets.LALAMAID_IP}}
 
