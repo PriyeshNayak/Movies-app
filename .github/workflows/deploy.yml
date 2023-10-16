@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
+        uses: ./
         with:
           host: ${{secrets.NGINX_MASTER_IP}}
           username: ${{secrets.NGINX_MASTER_USERNAME}}
