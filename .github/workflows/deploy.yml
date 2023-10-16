@@ -1,31 +1,4 @@
-# name: Build & Deploy
-
-# on:
-#   push:
-#     branches:
-#       - pipeline-devops
-
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Executing remote ssh commands using ssh key
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{secrets.NGINX_MASTER_IP}}
-#           username: ${{secrets.NGINX_MASTER_USERNAME}}
-#           key: ${{ secrets.NGINX_MASTER_PVTKEY}}
-#           script: |
-#             $ls -la
-#             ssh lalamaid-be@${{ secrets.LALAMAID_IP}} ./test.sh
-
-
-
-
-
-
-name: Deploy to Server5
+name: Build & Deploy
 
 on:
   push:
@@ -33,21 +6,23 @@ on:
       - pipeline-devops
 
 jobs:
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.NGINX_MASTER_IP}}
+          username: ${{secrets.NGINX_MASTER_USERNAME}}
+          key: ${{ secrets.NGINX_MASTER_PVTKEY}}
+          script: |
+            echo "Hello"
 
-      - name: Setup SSH
-        run: |
-          echo ${{secrets.NGINX_MASTER_PVTKEY}} > ssh_key
-          chmod 600 ssh_key
-          eval $(ssh-agent)
-          ssh-add ssh_key
 
-      - name: SSH into nginx
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ssh_key ${{secrets.NGINX_MASTER_USERNAME}}@${{secrets.NGINX_MASTER_IP}} "mkdir testfle"
+
+
+
+
+
        
