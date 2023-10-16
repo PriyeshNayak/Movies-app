@@ -10,16 +10,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up SSH key
-        run: |
-          echo "$NGINX_MASTER_PVTKEY" > ssh_key.pem
-          chmod 600 ssh_key.pem
-          ssh-keyscan $NGINX_MASTER_IP >> ~/.ssh/known_hosts
-          ssh -i ssh_key.pem $NGINX_MASTER_USERNAME@$NGINX_MASTER_IP 'bash -s' < ./demo.sh
-        env:
-          NGINX_MASTER_PVTKEY: ${{ secrets.NGINX_MASTER_PVTKEY }}
-          NGINX_MASTER_IP: ${{ secrets.NGINX_MASTER_IP }}
-          NGINX_MASTER_USERNAME: ${{ secrets.NGINX_MASTER_USERNAME }}
+      - name: Set up SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.NGINX_MASTER_IP}}
+          username: ${{secrets.NGINX_MASTER_USERNAME}}
+          key: ${{secrets.NGINX_MASTER_PVTKEY}}
+          script: |
+            ssh ${{secrets.LALAMAID_USER}}@${{secrets.LALAMAID_IP}} 'bash -s' < ./demo.sh
