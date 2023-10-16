@@ -14,4 +14,5 @@ jobs:
           host: ${{secrets.NGINX_MASTER_IP}}
           username: ${{secrets.NGINX_MASTER_USERNAME}}
           key: ${{ secrets.NGINX_MASTER_PVTKEY}}
-          script: sh demo.sh
+          script: |
+                 - ssh ${{secrets.LALAMAID_USER}}@${{secrets.LALAMAID_IP}}
