@@ -49,5 +49,5 @@ jobs:
 
       - name: SSH into nginx
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{secrets.NGINX_MASTER_USERNAME}}@${{secrets.NGINX_MASTER_IP}} "mkdir testfle"
+          ssh -o StrictHostKeyChecking=no -i ssh_key ${{secrets.NGINX_MASTER_USERNAME}}@${{secrets.NGINX_MASTER_IP}} "mkdir testfle"
        
