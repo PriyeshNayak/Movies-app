@@ -2,43 +2,17 @@ name: Build & Deploy
 
 on:
   push:
-    branches: [ "main" ]
-
-  pull_request:
-    branches: [ "main" ]
-
+    branches: [ "pipeline-devops" ]
 jobs:
-  build-and-deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run test --if-present
-
-      - uses: a7ul/tar-action@v1.1.0
-        with:
-          command: c
-          cwd: "./"
-          files: |
-            backend/
-            frontend/dist/
-            captain-definition
-          outPath: deploy.tar
-
-      - name: Deploy App to CapRover
-        uses: caprover/deploy-from-github@v1.0.1
-        with:
-          server: '${{ secrets.CAPROVER_SERVER }}'
-          app: '${{ secrets.APP_NAME }}'
-          token: '${{ secrets.APP_TOKEN }}'
+          host: ${{secrets.NGINX_MASTER_IP}}
+          username: ${{secrets.NGINX_MASTER_USERNAME}}
+          key: ${{ secrets.NGINX_MASTER_PVTKEY}}
+          script: |
+            ssh lalamaid-be@LALAMAID_IP ./test.sh
