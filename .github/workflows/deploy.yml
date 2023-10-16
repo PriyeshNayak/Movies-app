@@ -17,7 +17,7 @@ jobs:
           username: ${{secrets.NGINX_MASTER_USERNAME}}
           key: ${{ secrets.NGINX_MASTER_PVTKEY}}
           script: |
-            whoami
+            $ls -la
             ssh lalamaid-be@${{ secrets.LALAMAID_IP}} ./test.sh
 
          
