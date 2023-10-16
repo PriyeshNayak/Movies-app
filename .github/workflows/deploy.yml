@@ -15,4 +15,5 @@ jobs:
           username: ${{secrets.NGINX_MASTER_USERNAME}}
           key: ${{ secrets.NGINX_MASTER_PVTKEY}}
           script: |
+            pwd
             ssh lalamaid-be@LALAMAID_IP ./test.sh
