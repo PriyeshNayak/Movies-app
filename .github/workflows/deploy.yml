@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{secrets.NGINX_MASTER_IP}}
-          username: ${{secrets.NGINX_MASTER_USERNAME}}
-          key: ${{secrets.NGINX_MASTER_PVTKEY}}
-          script: |
-            ssh ${{secrets.LALAMAID_USER}}@${{secrets.LALAMAID_IP}} 'bash -s' < ./demo.sh
+        run: |
+          echo "$PRIVATE_SSH_KEY" > ssh_key
+          chmod 600 ssh_key
+          ssh -i ssh_key ${{secrets.NGINX_MASTER_USERNAME}}@${{secrets.NGINX_MASTER_IP}} 'bash -s' < ./demo.sh
+        env:
+          PRIVATE_SSH_KEY: ${{secrets.NGINX_MASTER_PVTKEY}}
+
+         
